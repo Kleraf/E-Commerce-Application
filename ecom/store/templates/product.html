@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="container">
+    <br>
+<div class="card mb-3" >
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="{{product.image.url}}" class="img-fluid rounded-start" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <center>
+        <h5 class="card-title">{{product.name}}</h5>
+        <p class="card-text">{{product.description}}</p>
+
+            <!-- Star "Sale!" notice -->
+                                {% if product.is_sale %}
+                                    <div class="d-flex justify-content-center small text-warning mb-2">
+                                        <div class="bi-star-fill"></div>
+                                        &nbsp;&nbsp;Sale!&nbsp;&nbsp;
+                                        <div class="bi-star-fill"></div>
+                                    </div>
+                                {% endif %}
+
+                                <!-- Product price -->
+                                {% if product.is_sale %}
+                                    <span class="text-muted text-decoration-line-through">{{ product.price }}</span>
+                                    <span class="ms-2">{{ product.sale_price }}</span>
+                                {% else %}
+                                    {{ product.price }}
+                                {% endif %}
+
+            <br>
+            <br>
+
+        <a href="{%url 'home'%}" class="btn btn-secondary">home</a>
+       <button class="btn btn-secondary add-cart" data-id="{{ product.id }}">
+  Add to cart
+</button>
+
+        </center>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+  $(document).on('click', '.add-cart', function(e) {
+    e.preventDefault();
+
+    let product_id = $(this).data('id');  // get product id from button
+
+    $.ajax({
+      type: 'POST',
+      url: "{% url 'cart_add' %}",
+      data: {
+        product_id: product_id,
+        csrfmiddlewaretoken: '{{ csrf_token }}',
+        action: 'post'
+      },
+      success: function(json) {
+        document.getElementById("cart_quantity").textContent = json.qty 
+        // console.log("✅ Added:", json);
+      },
+      error: function(xhr, errmsg, err) {
+        console.log("❌ Error:", xhr.responseText);
+      }
+    });
+  });
+</script>
+
+
+{% endblock %}

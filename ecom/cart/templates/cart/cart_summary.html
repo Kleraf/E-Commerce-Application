@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<!-- Header -->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Shopping Cart</h1>
+            <p class="lead fw-normal text-white-50 mb-0">View your Cart</p>
+        </div>
+    </div>
+</header>
+
+<!-- Section -->
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row">
+            <!-- Add cart items here; for now, a placeholder -->
+            <p>Your cart is empty.</p>
+            <!-- If you have cart items, loop through them like this: -->
+            <!--
+            {% for item in cart_items %}
+                <div class="col mb-5">
+                    <h5>{{ item.product.name }}</h5>
+                    <p>Price: {{ item.product.price }}</p>
+                </div>
+            {% empty %}
+                <p>Your cart is empty.</p>
+            {% endfor %}
+            -->
+        </div>
+    </div>
+</section>
+
+{% endblock %}
